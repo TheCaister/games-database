@@ -37,9 +37,11 @@ import { HttpErrorsInterceptor } from './interceptors/http-errors.interceptor';
     MatIconModule,
   ],
   providers: [
+    // Providing different interceptors
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpHeadersInterceptor,
+      // Set multi to true since we're injecting an array of values
       multi: true,
     },
     {

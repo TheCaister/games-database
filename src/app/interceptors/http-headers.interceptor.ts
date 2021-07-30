@@ -16,9 +16,10 @@ export class HttpHeadersInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     // Setting headers and parameters of the request
+    // Modifying the clone since requests and responses are readonly
     req = req.clone({
       setHeaders: {
-        'x-rapidapi-key': '0c456b89f4msh446650a72b3fee7p11d4e0jsna30d5186ad0f',
+        'x-rapidapi-key': '',
         'x-rapidapi-host': 'rawg-video-games-database.p.rapidapi.com',
       },
       setParams: {
