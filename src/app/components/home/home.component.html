@@ -2,27 +2,46 @@
   <!-- Creating a form with several selections -->
   <mat-form-field>
     <mat-label>Sort</mat-label>
-    <mat-select
-      	panelClass="sort-select"
-        [(ngModel)]="sort">
-        <mat-option value="name">Name</mat-option>
-        <mat-option value="-released">Released</mat-option>
-        <mat-option value="-added">Added</mat-option>
-        <mat-option value="-created">Created</mat-option>
-        <mat-option value="-updated">Updated</mat-option>
-        <mat-option value="-rating">Rating</mat-option>
-        <mat-option value="metacritic">Metacritic</mat-option>
+    <mat-select panelClass="sort-select" [(ngModel)]="sort">
+      <mat-option value="name">Name</mat-option>
+      <mat-option value="-released">Released</mat-option>
+      <mat-option value="-added">Added</mat-option>
+      <mat-option value="-created">Created</mat-option>
+      <mat-option value="-updated">Updated</mat-option>
+      <mat-option value="-rating">Rating</mat-option>
+      <mat-option value="metacritic">Metacritic</mat-option>
     </mat-select>
   </mat-form-field>
 </div>
 
-<div class="game">
-  <div class="game">
-    <div class="game-thumb-container">
-      <img src="https://cdn2.unrealengine.com/metaimage1-1920x1080-abb60090deaf.png" alt="thumbnail" class="game-thumbnail">
+<div class="games">
+  <!-- Iterating through every game that was gotten from the API -->
+  <ng-container *ngFor="let game of games">
+    <div class="game">
+      <div class="game-thumb-container">
+        <!-- Check if there is a background image for a game -->
+        <img
+          *ngIf="game.background_image"
+          src="{{ game.background_image }}"
+          alt="thumbnail"
+          class="game-thumbnail"
+        />
+      </div>
+      <!-- If no images are found, just print No image -->
+      <p *ngIf="!game.background_image">No image</p>
+
+      <div class="game-description">
+        <p class="game-name">{{ game.name }}</p>
+        <div class="game-platforms">
+          <!-- Going through every parent platform of a game and displaying them -->
+          <img
+            *ngFor="let gamePlatform of game.parent_platforms"
+            class="game-platform"
+            src="assets/images/platforms/{{ gamePlatform.platform.name}}.svg"
+            alt="{{gamePlatform.platform.name}}"
+          />
+        </div>
+      </div>
     </div>
-    <div class="game-description">
-      <img src="https://img.redbull.com/images/c_limit,w_1500,h_1000,f_auto,q_auto/redbullcom/2018/07/13/53893147-8933-4943-864b-e5ccc919cdee/fortnite-map-quiz-lead" alt="slug" class="game-platform">
-    </div>
-  </div>
+  </ng-container>
 </div>
