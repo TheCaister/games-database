@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import { APIResponse, Game } from '../../models';
 import { HttpService } from '../../services/http.service';
 
@@ -8,15 +9,17 @@ import { HttpService } from '../../services/http.service';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit , OnDestroy {
   public sort: string;
   public games: Array<Game>;
+  private routeSubscription: Subscription;
+  private gameSubscription: Subscription;
 
   constructor(private httpService: HttpService,
-    private activatedRoute: ActivatedRoute) { }
+    private activatedRoute: ActivatedRoute, private router: Router) { }
 
   ngOnInit(): void {
-    this.activatedRoute.params.subscribe((params: Params) => {
+    this.routeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       // Check if there is a search query for a particular game
       if(params['game-search']){
         this.searchGames('metacrit', params['game-search']);
@@ -29,7 +32,7 @@ export class HomeComponent implements OnInit {
 
   // Searching games, waiting to get an observable of an APIResponse. Once received, set the results to games
   searchGames(sort: string, search?: string) : void{
-    this.httpService
+    this.gameSubscription = this.httpService
       .getGamesList(sort, search)
       .subscribe((gameList: APIResponse<Game>) => {
         this.games = gameList.results;
@@ -37,4 +40,20 @@ export class HomeComponent implements OnInit {
       });
   }
 
+  // Function called to display a game's details when an ID is provided
+  openGameDetails(id: string) : void {
+    // Navigating to a details page
+      this.router.navigate(['details', id]);
+  }
+
+  // Unsubcribing once we are done to prevent memory leaks
+  ngOnDestroy(): void {
+    if(this.gameSubscription){
+      this.gameSubscription.unsubscribe();
+    }
+
+    if(this.routeSubscription){
+      this.routeSubscription.unsubscribe();
+    }
+  }
 }

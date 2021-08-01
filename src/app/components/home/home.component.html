@@ -2,7 +2,11 @@
   <!-- Creating a form with several selections -->
   <mat-form-field>
     <mat-label>Sort</mat-label>
-    <mat-select panelClass="sort-select" [(ngModel)]="sort">
+    <!-- Update sort selection and every time the selection changes, call searchGames() with the sort value selected -->
+    <mat-select
+      panelClass="sort-select"
+      [(ngModel)]="sort"
+      (selectionChange)="searchGames(sort)">
       <mat-option value="name">Name</mat-option>
       <mat-option value="-released">Released</mat-option>
       <mat-option value="-added">Added</mat-option>
@@ -17,7 +21,7 @@
 <div class="games">
   <!-- Iterating through every game that was gotten from the API -->
   <ng-container *ngFor="let game of games">
-    <div class="game">
+    <div class="game" (click)="openGameDetails(game.id)">
       <div class="game-thumb-container">
         <!-- Check if there is a background image for a game -->
         <img
