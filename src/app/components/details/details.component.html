@@ -2,19 +2,21 @@
   <!-- Big banner for the game-->
   <div class="game-banner">
     <img class="game-banner-img"
-    src=""
+    src="{{game.background_image}}"
     alt="">
   </div>
   <!-- Details such as title, release date, etc. -->
   <div class="game-content">
     <div class="details-wrapper">
       <div class="game-header">
-        <h1 class="game-header-title">Game Name</h1>
+        <h1 class="game-header-title">{{game.name}}</h1>
+        <!-- Display release date as date -->
         <h2 class="game-header-release-date">
-          Released
+          Released: {{game.released | date}}
         </h2>
         <p class="game-header-genres">
-          <span>RPG</span>
+          <!-- Iterate through every genre and print them out. If a genre isn't the last one in the list, print a comma after it -->
+          <span *ngFor="let genre of game.genres; let last = last">{{genre.name}}<span *ngIf="!last">, </span></span>
         </p>
         <!-- Gauge to visually depict rating -->
         <div class="game-gauge">
@@ -28,10 +30,11 @@
           [color]="getColor"
           [animationDuration]="2">
           </mwl-gauge>
+          <!-- Providing a link to the metacritic page -->
           <a
             class="game-gauge-label"
             target="_blank"
-            href="">Metacritic</a>
+            href="{{game.metacritic_url}}">Metacritic</a>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { forkJoin, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { environment as env } from '../../environments/environment';
 import { APIResponse, Game } from '../models';
 
@@ -26,5 +27,29 @@ export class HttpService {
     return this.http.get<APIResponse<Game>>(`${env.BASE_URL}/games`, {
       params: params,
     });
+  }
+
+  getGameDetails(id: string) : Observable<Game> {
+    // Creating observables from get() method, getting the game's info, trailers and screenshots
+    const gameInfoRequest = this.http.get(`${env.BASE_URL}/games/${id}`);
+    const gameTrailersRequest = this.http.get(`${env.BASE_URL}/games/${id}/movies`);
+    const gameScreenshotsRequest = this.http.get(`${env.BASE_URL}/games/${id}/screenshots`);
+
+    // Using forkJoin so that when all the observables are complete, emit the last emitted value from each of them.
+    return forkJoin({
+      gameInfoRequest,
+      gameTrailersRequest,
+      gameScreenshotsRequest,
+    }).pipe(
+      // For each value emitted(map)
+      map((response: any) => {
+        return{
+          // Get everything within response['gameInfoRequest'] as well as the screenshots and trailers if they are present
+          ...response['gameInfoRequest'],
+          screenshots: response['gameScreenshotsRequest']?.results,
+          trailers: response['gameTrailersRequest']?.results,
+        }
+      })
+    )
   }
 }
