@@ -1,0 +1,67 @@
+<div class="game-tabs">
+  <!-- Group of tabs relating to the game -->
+  <mat-tab-group mat-align-tabs="start" backgroundColor="primary">
+    <!-- Tab for info such as platforms, publishers, etc. -->
+    <mat-tab label="About">
+      <!-- Check if there are parent platforms. Don't render if there aren't any -->
+      <!-- Repeat for other properties -->
+      <p *ngIf="game.parent_platforms?.length" class="game-tabs-par">
+        Platforms:
+        <span *ngFor="let game of game.parent_platforms; let last = last"
+          >{{ game.platform.name }}<span *ngIf="!last">, </span>
+        </span>
+      </p>
+
+      <p *ngIf="game.publishers?.length" class="game-tabs-par">
+        Publishers:
+        <span *ngFor="let publisher of game.publishers; let last = last"
+          >{{ publisher.name }}<span *ngIf="!last">, </span></span
+        >
+      </p>
+
+      <p *ngIf="game.website" class="game-tabs-par">
+        Website:
+        <a class="game-tabs-link" href="{{ game.website }}" target="_blank">{{
+          game.website
+        }}</a>
+      </p>
+
+      <!-- Rendering description as HTML -->
+      <div class="game-description" [innerHTML]="game.description"></div>
+      <p class="game-tabs-votes">
+        <ng-container *ngFor="let rating of game.ratings">
+          <span *ngIf="rating.title === 'exceptional'">
+            <mat-icon class="game-votes-up">thumb_up</mat-icon>
+            <!-- Display the rating count if it exists. Otherwise print 0 -->
+            <span class="game-votes-count">{{ rating.count || 0 }}</span>
+          </span>
+          <span *ngIf="rating.title === 'skip'">
+            <mat-icon class="game-votes-down">thumb_down</mat-icon>
+            <span class="game-votes-count">{{ rating.count || 0 }}</span>
+          </span>
+        </ng-container>
+      </p>
+    </mat-tab>
+    <!-- Tab for screenshots -->
+    <mat-tab label="Screenshots" *ngIf="game.screenshots?.length">
+      <img
+        class="game-screenshot"
+        *ngFor="let screenshot of game.screenshots"
+        src="{{ screenshot.image }}"
+        alt="screenshot"
+      />
+    </mat-tab>
+    <!-- Tab for trailers -->
+    <mat-tab label="Trailers" *ngIf="game.trailers?.length">
+      <video
+        *ngFor="let trailer of game.trailers"
+        class="game-trailer"
+        controls
+      >
+        <!-- Display the max resolution of the trailer -->
+        <source src="{{ trailer.data?.max }}" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </mat-tab>
+  </mat-tab-group>
+</div>
