@@ -20,6 +20,7 @@ export class HttpErrorsInterceptor implements HttpInterceptor {
     return next.handle(req).pipe(
       catchError((err) => {
         console.log(err);
+        console.log("Bruh");
         return observableThrowError(err);
       })
     );
