@@ -16,8 +16,13 @@ export class SearchBarComponent implements OnInit {
 
   onSubmit(form: NgForm){
 
-    // Searches for the value submitted in the form
-    this.router.navigate(['search', form.value.search])
+    if(form.value.search){
+      // Searches for the value submitted in the form
+      this.router.navigate(['search', form.value.search])
+    }
+    else{
+      alert("Please input a value!")
+    }
     form.resetForm();
   }
 
