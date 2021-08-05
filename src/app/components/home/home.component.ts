@@ -32,12 +32,24 @@ export class HomeComponent implements OnInit , OnDestroy {
 
   // Searching games, waiting to get an observable of an APIResponse. Once received, set the results to games
   searchGames(sort: string, search?: string) : void{
+    this.sort = sort;
     this.gameSubscription = this.httpService
       .getGamesList(sort, search)
       .subscribe((gameList: APIResponse<Game>) => {
         this.games = gameList.results;
         console.log(gameList.results);
       });
+  }
+
+  // Function for inverting sort
+  invertSort(){
+    if(this.sort[0] === '-'){
+      this.sort = this.sort.substring(1);
+    }
+    else{
+      this.sort = '-' + this.sort;
+    }
+    this.searchGames(this.sort);
   }
 
   // Function called to display a game's details when an ID is provided
