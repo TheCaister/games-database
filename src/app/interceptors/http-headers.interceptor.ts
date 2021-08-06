@@ -19,7 +19,7 @@ export class HttpHeadersInterceptor implements HttpInterceptor {
     // Modifying the clone since requests and responses are readonly
     req = req.clone({
       setHeaders: {
-        'x-rapidapi-key': '263a774215mshec96836ee4acb66p1756b1jsn89603a669d55',
+        'x-rapidapi-key': '',
         'x-rapidapi-host': 'rawg-video-games-database.p.rapidapi.com',
       },
       setParams: {

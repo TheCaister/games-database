@@ -1,4 +1,14 @@
 <div class="games-pages">
-  <ng-container *ngFor="let i of [].constructor(5)"><button>Bruh</button></ng-container>
+  <div class="pages-container">
+    <div class="buttons">
+      <button (click)="previousPage()"><</button>
+    </div>
+    <div class="current-page">
+      <h3>{{this.currentPage}}</h3>
+    </div>
+    <div class="buttons">
+      <button (click)="nextPage()">></button>
+    </div>
+  </div>
 </div>
 

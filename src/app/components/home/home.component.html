@@ -19,6 +19,10 @@
   <button (click)="invertSort()">Reverse</button>
 </div>
 
+<div>
+  <app-games-pages></app-games-pages>
+</div>
+
 <div class="games">
   <!-- Iterating through every game that was gotten from the API -->
   <ng-container *ngFor="let game of games">

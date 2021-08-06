@@ -10,7 +10,7 @@ import { HttpService } from '../../services/http.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit , OnDestroy {
-  public sort: string;
+  public sort: string = "metacritic";
   public games: Array<Game>;
   private routeSubscription: Subscription;
   private gameSubscription: Subscription;
@@ -49,7 +49,8 @@ export class HomeComponent implements OnInit , OnDestroy {
     else{
       this.sort = '-' + this.sort;
     }
-    this.searchGames(this.sort);
+
+    this.searchGames(this.sort)
   }
 
   // Function called to display a game's details when an ID is provided
