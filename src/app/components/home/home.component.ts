@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit , OnDestroy {
   constructor(private httpService: HttpService,
     private activatedRoute: ActivatedRoute, private router: Router) { }
 
+  public currentPage = this.httpService.pageNumber
+
   ngOnInit(): void {
     this.routeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       // Check if there is a search query for a particular game
@@ -57,6 +59,10 @@ export class HomeComponent implements OnInit , OnDestroy {
   openGameDetails(id: string) : void {
     // Navigating to a details page
       this.router.navigate(['details', id]);
+  }
+
+  updatePage(){
+    this.currentPage = this.httpService.pageNumber;
   }
 
   // Unsubcribing once we are done to prevent memory leaks

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { HttpService } from '../../services/http.service';
 import { HomeComponent } from '../home/home.component';
 
@@ -12,15 +12,17 @@ export class GamesPagesComponent implements OnInit {
 
   constructor(private httpService: HttpService, private home: HomeComponent) { }
 
-  public currentPage = this.httpService.pageNumber;
+  // Input from the parent home component to update the 2 instances of this games-pages component
+  @Input() currentPage = this.httpService.pageNumber;
+
+  @Output() switchPageEvent = new EventEmitter();
 
   ngOnInit(): void {
   }
 
   nextPage(){
     this.httpService.pageNumber += 1;
-    this.currentPage = this.httpService.pageNumber;
-    this.home.searchGames(this.home.sort);
+    this.updatePage();
   }
 
   previousPage(){
@@ -28,7 +30,13 @@ export class GamesPagesComponent implements OnInit {
       return;
     }
     this.httpService.pageNumber -= 1;
-    this.currentPage = this.httpService.pageNumber;
+    this.updatePage();
+  }
+
+  // Updating the current page and search
+  updatePage(){
+    //this.currentPage = this.httpService.pageNumber;
     this.home.searchGames(this.home.sort);
+    this.switchPageEvent.emit();
   }
 }

@@ -19,8 +19,9 @@
   <button (click)="invertSort()">Reverse</button>
 </div>
 
+<!-- There are 2 games-pages components and both of their currentPage will display the currentPage value of the home component, which is equal to the currentPage value in httpService -->
 <div>
-  <app-games-pages></app-games-pages>
+  <app-games-pages [currentPage]="currentPage" (switchPageEvent)="updatePage()"></app-games-pages>
 </div>
 
 <div class="games">
@@ -56,5 +57,5 @@
 </div>
 
 <div>
-  <app-games-pages></app-games-pages>
+  <app-games-pages [currentPage]="currentPage"></app-games-pages>
 </div>
