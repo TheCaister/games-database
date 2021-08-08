@@ -15,14 +15,23 @@ export class HttpService {
   constructor(private http: HttpClient) { }
 
   // This function will be called from the home component which will pass in ordering and an optional search. Will return an observable with API response array of games
-  getGamesList(ordering: string, search?: string):
+  getGamesList(ordering: string, search?: string, size?: number):
   Observable<APIResponse<Game>>{
+    let pageSize: number;
 
-    let params = new HttpParams().set('ordering', ordering).set('page', this.pageNumber)
+    // If there's a size passed in, set the page size
+    if(size){
+      pageSize = size;
+    }
+    else{
+      pageSize = 20;
+    }
+
+    let params = new HttpParams().set('ordering', ordering).set('page', this.pageNumber).set('page_size', pageSize);
 
     // If there is a search value, update params
     if(search){
-      params = new HttpParams().set('ordering', ordering).set('search', search)
+      params = new HttpParams().set('ordering', ordering).set('page', this.pageNumber).set('search', search).set('page_size', pageSize);
     }
 
    // Using back tick `` for processing stuff into strings

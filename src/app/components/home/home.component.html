@@ -17,6 +17,18 @@
     </mat-select>
   </mat-form-field>
   <button (click)="invertSort()">Reverse</button>
+  <mat-form-field>
+    <mat-label>Page size</mat-label>
+    <!-- Update sort selection and every time the selection changes, call searchGames() with the sort value selected -->
+    <mat-select
+      panelClass="page-size-select"
+      [(ngModel)]="pageSize"
+      (selectionChange)="updatePageSize()">
+      <mat-option value="12">12</mat-option>
+      <mat-option value="20">20</mat-option>
+      <mat-option value="28">28</mat-option>
+    </mat-select>
+  </mat-form-field>
 </div>
 
 <!-- There are 2 games-pages components and both of their currentPage will display the currentPage value of the home component, which is equal to the currentPage value in httpService -->

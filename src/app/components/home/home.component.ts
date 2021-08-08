@@ -11,6 +11,7 @@ import { HttpService } from '../../services/http.service';
 })
 export class HomeComponent implements OnInit , OnDestroy {
   public sort: string = "metacritic";
+  public pageSize = 20;
   public games: Array<Game>;
   private routeSubscription: Subscription;
   private gameSubscription: Subscription;
@@ -36,7 +37,7 @@ export class HomeComponent implements OnInit , OnDestroy {
   searchGames(sort: string, search?: string) : void{
     this.sort = sort;
     this.gameSubscription = this.httpService
-      .getGamesList(sort, search)
+      .getGamesList(sort, search, this.pageSize)
       .subscribe((gameList: APIResponse<Game>) => {
         this.games = gameList.results;
         console.log(gameList.results);
@@ -61,8 +62,16 @@ export class HomeComponent implements OnInit , OnDestroy {
       this.router.navigate(['details', id]);
   }
 
+  // Updating the value of currentPage
   updatePage(){
     this.currentPage = this.httpService.pageNumber;
+  }
+
+  // Updating the size of the page
+  updatePageSize(){
+    console.log(this.pageSize);
+
+    this.searchGames(this.sort);
   }
 
   // Unsubcribing once we are done to prevent memory leaks

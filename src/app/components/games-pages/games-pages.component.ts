@@ -20,6 +20,7 @@ export class GamesPagesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  // Functions for navigating between pages and changing pageNumber
   nextPage(){
     this.httpService.pageNumber += 1;
     this.updatePage();
@@ -35,7 +36,6 @@ export class GamesPagesComponent implements OnInit {
 
   // Updating the current page and search
   updatePage(){
-    //this.currentPage = this.httpService.pageNumber;
     this.home.searchGames(this.home.sort);
     this.switchPageEvent.emit();
   }
