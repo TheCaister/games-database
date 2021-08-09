@@ -34,6 +34,17 @@ export class GamesPagesComponent implements OnInit {
     this.updatePage();
   }
 
+  jumpPage(pagesToJump: number){
+    let calculatedPage: number = this.httpService.pageNumber + pagesToJump;
+
+    if(calculatedPage < 1){
+      calculatedPage = 1;
+    }
+
+    this.httpService.pageNumber = calculatedPage;
+    this.updatePage();
+  }
+
   firstPage(){
     this.httpService.pageNumber = 1;
     this.updatePage();

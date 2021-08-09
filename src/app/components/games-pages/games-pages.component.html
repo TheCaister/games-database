@@ -4,13 +4,19 @@
       <button (click)="firstPage()"><<</button>
     </div>
     <div class="buttons">
-      <button (click)="previousPage()"><</button>
+      <button (click)="jumpPage(-5)">-5</button>
+    </div>
+    <div class="buttons">
+      <button (click)="jumpPage(-1)"><</button>
     </div>
     <div class="current-page">
       <h3>{{this.currentPage}}</h3>
     </div>
     <div class="buttons">
-      <button (click)="nextPage()">></button>
+      <button (click)="jumpPage(1)">></button>
+    </div>
+    <div class="buttons">
+      <button (click)="jumpPage(5)">+5</button>
     </div>
   </div>
 </div>
