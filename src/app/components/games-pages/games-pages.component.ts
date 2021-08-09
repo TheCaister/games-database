@@ -34,6 +34,11 @@ export class GamesPagesComponent implements OnInit {
     this.updatePage();
   }
 
+  firstPage(){
+    this.httpService.pageNumber = 1;
+    this.updatePage();
+  }
+
   // Updating the current page and search
   updatePage(){
     this.home.searchGames(this.home.sort);
