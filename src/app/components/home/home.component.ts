@@ -13,6 +13,7 @@ export class HomeComponent implements OnInit , OnDestroy {
   public sort: string = "metacritic";
   public pageSize = 20;
   public games: Array<Game>;
+  public hasSorted: boolean = false;
   private routeSubscription: Subscription;
   private gameSubscription: Subscription;
 
@@ -22,6 +23,8 @@ export class HomeComponent implements OnInit , OnDestroy {
   public currentPage = this.httpService.pageNumber
 
   ngOnInit(): void {
+    console.log("Current sort: " + this.sort);
+
     this.routeSubscription = this.activatedRoute.params.subscribe((params: Params) => {
       // Check if there is a search query for a particular game
       if(params['game-search']){
@@ -83,5 +86,28 @@ export class HomeComponent implements OnInit , OnDestroy {
     if(this.routeSubscription){
       this.routeSubscription.unsubscribe();
     }
+  }
+
+  // For displaying the selected sort in the sort selection box
+  sortSelectionFormat(selectedSort: string){
+    let formattedString;
+    // Removing the -
+    if(selectedSort[0] === '-'){
+      formattedString = selectedSort.slice(1);
+    }
+
+    return this.capitalizeFirstLetter(formattedString);
+
+  }
+
+  // Helper function for capitalizing the first letter of a string
+  capitalizeFirstLetter(string: string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+  }
+
+  detectSelectionChange(sort: string){
+    this.hasSorted = true;
+    console.log(this.hasSorted);
+    this.searchGames(sort);
   }
 }

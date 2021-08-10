@@ -1,12 +1,12 @@
 <div class="filters">
   <!-- Creating a form with several selections -->
   <mat-form-field>
-    <mat-label>Sort</mat-label>
+    <mat-label><p *ngIf="!hasSorted">Sort</p>  <p *ngIf="this.sort[0] === '-'">{{sortSelectionFormat(sort) + "(reversed)"}}</p></mat-label>
     <!-- Update sort selection and every time the selection changes, call searchGames() with the sort value selected -->
     <mat-select
       panelClass="sort-select"
       [(ngModel)]="sort"
-      (selectionChange)="searchGames(sort)">
+      (selectionChange)="detectSelectionChange(sort)">
       <mat-option value="name">Name</mat-option>
       <mat-option value="released">Released</mat-option>
       <mat-option value="added">Added</mat-option>
