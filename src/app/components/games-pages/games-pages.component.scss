@@ -1,20 +1,32 @@
-
 .pages-container{
+  display: flex;
+}
+
+.buttons {
+  margin: 0 10px;
+  background-color: #b5473f;
+  color: white;
+  font-weight: 1200;
+  font-size: medium;
+}
+
+.main-buttons-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.current-page {
   width: 10%;
   display: flex;
-  margin: 0 auto;
-}
-
-.buttons{
   justify-content: center;
-  margin: 0 auto;
+  align-items: center;
+  color: white;
+  font-weight: 1200;
+  font-size: medium;
 }
 
-.current-page{
-  width: 10%;
-}
-
-h3{
+h3 {
   text-align: center;
   color: white;
 }

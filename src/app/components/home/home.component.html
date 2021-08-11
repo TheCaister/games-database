@@ -16,7 +16,7 @@
       <mat-option value="metacritic">Metacritic</mat-option>
     </mat-select>
   </mat-form-field>
-  <button (click)="invertSort()">Reverse</button>
+  <button mat-button class="reverse" (click)="invertSort()">Reverse</button>
   <mat-form-field>
     <mat-label>Page size</mat-label>
     <!-- Update sort selection and every time the selection changes, call searchGames() with the sort value selected -->
